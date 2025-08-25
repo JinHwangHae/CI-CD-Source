@@ -1,0 +1,70 @@
+name: Deploy construkted.js to WordPress Theme
+
+on:
+  push:
+    branches: [main, master, develop, issue150_sync_git_repo_between_WP_and_JS]
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+
+      - name: Check if construkted.js exists in build folder
+        run: |
+          if [ ! -f "build/construkted.js" ]; then
+            echo "❌ Error: construkted.js not found in build/ folder"
+            exit 1
+          fi
+          echo "✅ Found construkted.js file in build/ folder"
+          ls -la build/construkted.js
+
+      - name: Deploy to WordPress Theme Repository
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          TARGET_REPO: JinHwangHae/CI-CD-target
+          TARGET_BRANCH: develop
+          TARGET_PATH: wp-content/themes/gowatch-child/includes/construkted/assets/js
+        run: |
+          echo "🚀 Starting deployment to WordPress theme repository..."
+
+          # Setup git with deploy key
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+          # Clone target repository
+          git clone git@github.com:$TARGET_REPO.git temp-repo
+          cd temp-repo
+
+          # Checkout target branch
+          git checkout $TARGET_BRANCH
+
+          # Create target directory structure
+          mkdir -p $TARGET_PATH
+
+          # Copy construkted.js from build folder to target location
+          cp ../build/construkted.js $TARGET_PATH/
+
+          # Commit and push changes
+          git add $TARGET_PATH/construkted.js
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git commit -m "Update construkted.js from JS repository to $TARGET_PATH/"
+          git push origin $TARGET_BRANCH
+
+          echo "✅ Deployment completed successfully!"
+          echo "📦 construkted.js deployed to $TARGET_PATH/"
+
+          # Cleanup
+          cd ..
+          rm -rf temp-repo
+
+      - name: Deployment Status
+        run: |
+          echo "🎉 Deployment completed successfully!"
+          echo "📁 File deployed to: wp-content/themes/gowatch-child/includes/construkted/assets/js/construkted.js"
