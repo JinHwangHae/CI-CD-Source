@@ -1,70 +1,85 @@
 name: Deploy construkted.js to WordPress Theme
 
 on:
-  push:
-    branches: [main, master, develop, issue150_sync_git_repo_between_WP_and_JS]
-  workflow_dispatch: # Allow manual trigger
+    push:
+        branches: [main, master, develop, issue150_sync_git_repo_between_WP_and_JS]
+    workflow_dispatch: # Allow manual trigger
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+    deploy:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout source repository
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout source repository
+              uses: actions/checkout@v4
 
-      - name: Check if construkted.js exists in build folder
-        run: |
-          if [ ! -f "build/construkted.js" ]; then
-            echo "❌ Error: construkted.js not found in build/ folder"
-            exit 1
-          fi
-          echo "✅ Found construkted.js file in build/ folder"
-          ls -la build/construkted.js
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "18.20.5"
+                  cache: "yarn"
 
-      - name: Deploy to WordPress Theme Repository
-        env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-          TARGET_REPO: JinHwangHae/CI-CD-target
-          TARGET_BRANCH: develop
-          TARGET_PATH: wp-content/themes/gowatch-child/includes/construkted/assets/js
-        run: |
-          echo "🚀 Starting deployment to WordPress theme repository..."
+            - name: Install dependencies
+              run: yarn install
 
-          # Setup git with deploy key
-          mkdir -p ~/.ssh
-          echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
+            - name: Build project
+              run: yarn build
 
-          # Clone target repository
-          git clone git@github.com:$TARGET_REPO.git temp-repo
-          cd temp-repo
+            - name: Check if construkted.js exists in build folder
+              run: |
+                  if [ ! -f "build/construkted.js" ]; then
+                    echo "❌ Error: construkted.js not found in build/ folder"
+                    exit 1
+                  fi
+                  echo "✅ Found construkted.js file in build/ folder"
+                  ls -la build/construkted.js
 
-          # Checkout target branch
-          git checkout $TARGET_BRANCH
+            - name: Deploy to WordPress Theme Repository
+              env:
+                  DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+                  TARGET_REPO: JinHwangHae/CI-CD-target
+                  TARGET_BRANCH: develop
+                  TARGET_PATH: wp-content/themes/gowatch-child/includes/construkted/assets/js
+              run: |
+                  echo "🚀 Starting deployment to WordPress theme repository..."
 
-          # Create target directory structure
-          mkdir -p $TARGET_PATH
+                  # Setup git with deploy key
+                  mkdir -p ~/.ssh
+                  echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-          # Copy construkted.js from build folder to target location
-          cp ../build/construkted.js $TARGET_PATH/
+                  # Clone target repository
+                  git clone git@github.com:$TARGET_REPO.git temp-repo
+                  cd temp-repo
 
-          # Commit and push changes
-          git add $TARGET_PATH/construkted.js
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git commit -m "Update construkted.js from JS repository to $TARGET_PATH/"
-          git push origin $TARGET_BRANCH
+                  # Checkout target branch
+                  git checkout $TARGET_BRANCH
 
-          echo "✅ Deployment completed successfully!"
-          echo "📦 construkted.js deployed to $TARGET_PATH/"
+                  # Create target directory structure
+                  mkdir -p $TARGET_PATH
 
-          # Cleanup
-          cd ..
-          rm -rf temp-repo
+                  # Copy construkted.js from build folder to target location
+                  cp ../build/construkted.js $TARGET_PATH/
 
-      - name: Deployment Status
-        run: |
-          echo "🎉 Deployment completed successfully!"
-          echo "📁 File deployed to: wp-content/themes/gowatch-child/includes/construkted/assets/js/construkted.js"
+                  # Get version from package.json
+                  VERSION=$(node -p "require('../package.json').version")
+
+                  # Commit and push changes
+                  git add $TARGET_PATH/construkted.js
+                  git config user.name "GitHub Actions"
+                  git config user.email "actions@github.com"
+                  git commit -m "Update construkted.js from JS repository - version $VERSION to $TARGET_PATH/"
+                  git push origin $TARGET_BRANCH
+
+                  echo "✅ Deployment completed successfully!"
+                  echo "📦 construkted.js (v$VERSION) deployed to $TARGET_PATH/"
+
+                  # Cleanup
+                  cd ..
+                  rm -rf temp-repo
+
+            - name: Deployment Status
+              run: |
+                  echo "🎉 Deployment completed successfully!"
+                  echo "📁 File deployed to: wp-content/themes/gowatch-child/includes/construkted/assets/js/construkted.js"

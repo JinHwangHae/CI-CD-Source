@@ -2,7 +2,7 @@
 /.idea
 /yarn.lock
 /construkted.js
-/build
+build
 /construkted.js.map
 /package-lock.json
 /rollup.build.css
