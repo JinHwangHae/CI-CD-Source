@@ -17,7 +17,7 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: "18.20.5"
-                  cache: "yarn"
+                  # Remove cache to avoid path issues
 
             - name: Install dependencies
               run: yarn install
