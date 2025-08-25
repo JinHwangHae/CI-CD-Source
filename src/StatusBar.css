@@ -1,0 +1,27 @@
+.bottomBar {
+    position: absolute;
+    height: 29px;
+    left: calc(0%);
+    width: calc(100% - 29px);
+    bottom: 0;
+    background-color: rgba(45, 58, 66, 0.7);
+    /*z-index: 1;*/
+    color: #ffffff;
+}
+
+#coordinateContainer {
+    margin-right: 20px;
+    text-align: right;
+    float: right;
+    height: 100%;
+    overflow: hidden;
+}
+
+#coordinateContainer span {
+    font-size: 0.99rem;
+}
+
+#coordinateContainer span:not(:first-child) {
+    margin-left: 1.5em;
+    margin-block-start: 0.1em;
+}

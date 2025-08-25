@@ -1,0 +1,15 @@
+/node_modules
+/.idea
+/yarn.lock
+/construkted.js
+/build
+/construkted.js.map
+/package-lock.json
+/rollup.build.css
+
+!wp-content/themes/gowatch-child
+/.rollup.cache
+/dist
+/Cesium-1.106
+/Cesium-1.107
+/localServer/node_modules

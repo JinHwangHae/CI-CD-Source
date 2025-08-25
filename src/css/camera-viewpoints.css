@@ -1,0 +1,384 @@
+.camera-settings {
+    font-family: monospace;
+    margin: 15px 0;
+}
+
+.camera-settings h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.camera-settings-group {
+    background: #f5f5f5;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.camera-input-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.camera-input-wrapper {
+    position: relative;
+}
+
+.camera-input-wrapper label {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.camera-input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 13px;
+    text-align: right;
+    background: white;
+}
+
+.camera-input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+/* Specific styling for different input types */
+.position-input {
+    color: #2c5282;
+}
+
+.rotation-input {
+    color: #2d3748;
+}
+
+.zoom-input {
+    color: #2a4365;
+}
+
+/* Add units after inputs */
+.camera-input-wrapper[data-unit]::after {
+    content: attr(data-unit);
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #718096;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+/* Adjust padding for inputs with units */
+.camera-input-wrapper[data-unit] .camera-input {
+    padding-right: 30px;
+}
+
+/* Viewpoints List Styles */
+.viewpoints-list-section {
+    margin: 20px 0;
+}
+
+.viewpoints-list-section strong {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Viewpoint specific styles */
+.viewpoint-item .node-title {
+    font-weight: 500;
+    color: #2d3748;
+    display: block;
+}
+
+.viewpoint-item .node-description {
+    font-size: 12px;
+    color: #718096;
+    display: block;
+    margin-top: 2px;
+}
+
+.no-viewpoints {
+    text-align: center;
+    color: #718096;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* Dropdown menu styles */
+.cameraviewpoint-dropdown-menu {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 120px;
+    display: block;
+    right: 0px;
+    top: 30px;
+}
+
+.cameraviewpoint-dropdown-menu.hidden {
+    display: none !important;
+}
+
+.cameraviewpoint-dropdown-menu .menu-item {
+    display: block;
+    width: 100%;
+    padding: 3px 2px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 12px;
+    color: #333;
+}
+
+.cameraviewpoint-dropdown-menu .menu-item:hover {
+    background-color: #f5f5f5;
+}
+
+.cameraviewpoint-dropdown-menu .menu-item i {
+    margin-right: 8px;
+    width: 14px;
+    text-align: center;
+}
+
+.node-actions {
+    position: relative !important;
+}
+
+.cameraviewpoint-dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 16px;
+    color: #666;
+    border-radius: 4px;
+}
+
+.cameraviewpoint-dropdown-toggle:hover {
+    background-color: #f5f5f5;
+}
+
+/* Star button styles */
+.star-viewpoint-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ccc;
+    border-radius: 4px;
+    margin-right: 4px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-style: normal;
+}
+
+.star-viewpoint-btn:hover {
+    background-color: #f5f5f5;
+    transform: scale(1.1);
+}
+
+.star-viewpoint-btn span {
+    transition: all 0.2s ease;
+    font-style: normal;
+}
+
+.star-viewpoint-btn:hover span {
+    color: #4a90e2 !important;
+}
+
+/* Ensure the viewpoint item has proper positioning */
+.viewpoint-item {
+    position: relative;
+}
+
+.viewpoint-item .node-content {
+    position: relative;
+}
+
+/* Featured Image Styles */
+#post-featured-image {
+    margin: 15px 0;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 2px dashed #dee2e6;
+    padding: 10px;
+}
+
+#post-featured-image:empty::before {
+    content: "Camera view will appear here";
+    color: #6c757d;
+    font-style: italic;
+    font-size: 14px;
+}
+
+#post-featured-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+#post-featured-image img:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: #4a90e2;
+    transform: scale(1.02);
+}
+
+/* Default Viewpoint Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #2d3748;
+    font-size: 18px;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #718096;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.close-modal:hover {
+    background-color: #f7fafc;
+    color: #4a5568;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body p {
+    margin: 0 0 20px 0;
+    color: #4a5568;
+    font-size: 14px;
+}
+
+.viewpoint-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.viewpoint-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: #f7fafc;
+    transition: all 0.2s ease;
+}
+
+.viewpoint-option:hover {
+    border-color: #4a90e2;
+    background: #f0f8ff;
+}
+
+.viewpoint-info h4 {
+    margin: 0 0 4px 0;
+    color: #2d3748;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.viewpoint-info p {
+    margin: 0;
+    color: #718096;
+    font-size: 13px;
+}
+
+.select-viewpoint-btn {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.select-viewpoint-btn:hover {
+    background: #357abd;
+}
+
+/* Add button styling */
+.add-viewpoint-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 16px;
+    color: #4a90e2;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.add-viewpoint-btn:hover {
+    background-color: #f0f8ff;
+    transform: scale(1.1);
+}

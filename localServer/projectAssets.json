@@ -1,0 +1,18 @@
+[
+    {
+        "asset_type": "3d-tile",
+        "active_editor": "PredefinedGeoreference",
+        "asset_geo_location": "{\"longitude\":18.291180007520214,\"latitude\":49.02911087205184,\"height\":291.1,\"localGeoRefX\":-167.3,\"localGeoRefY\":-217.08,\"localGeoRefZ\":-536.96,\"heading\":0,\"pitch\":0,\"roll\":0,\"scale\":{\"x\":1,\"y\":1,\"z\":1}}",
+        "asset_geo_location_json_by_gcp": "",
+        "asset_geo_location_json_by_pre": "",
+        "asset_is_underground": "false",
+        "asset_server": "https://s3.us-east-2.wasabisys.com/construkted-assets",
+        "date_capture": "March 2, 2021",
+        "image": false,
+        "post_id": "10288",
+        "post_slug": "aa9s1i0jvt7",
+        "post_title": "3D Tile area",
+        "terrain_imagery_enabled": "false",
+        "new_style_url": ""
+    }
+]

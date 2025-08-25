@@ -1,0 +1,411 @@
+.annotation-tree-node {
+    padding: 1px 0px;
+    margin: 2px 0;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    position: relative;
+}
+
+.annotation-tree-node .node-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2px;
+    position: relative;
+}
+
+.annotation-tree-node .node-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.annotation-tree-node .node-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+}
+
+.annotation-tree-node .node-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+}
+
+.annotation-tree-node .node-children {
+    margin-left: 24px;
+    overflow: visible;
+    max-height: 1000px; /* Large enough to contain content */
+    opacity: 1;
+    transition: max-height 0.3s ease-in-out, opacity 0.2s ease-in-out;
+    position: relative;
+}
+
+.annotation-tree-node .node-children.collapsed {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.annotation-tree-node .collapse-toggle {
+    cursor: pointer;
+    user-select: none;
+    font-style: normal;
+    transition: transform 0.2s ease-in-out;
+    display: inline-block;
+    width: 16px;
+    text-align: center;
+}
+
+.annotation-tree-node .collapse-toggle.collapsed {
+    transform: rotate(-90deg);
+}
+
+.annotation-tree-node .collapse-toggle.hidden {
+    display: none;
+    width: 0;
+}
+
+.annotation-tree-node.dragging {
+    opacity: 0.5;
+}
+
+.annotation-tree-node.drop-before {
+    border-top: 2px solid #007bff;
+}
+
+.annotation-tree-node.drop-after {
+    border-bottom: 2px solid #007bff;
+}
+
+.annotation-tree-node.drop-inside {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.annotation-dropdown-menu {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 99999;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    padding: 6px;
+}
+
+.annotation-dropdown-menu.hidden {
+    display: none;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: none;
+    width: 100%;
+    min-width: 120px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.menu-item:hover {
+    background-color: #f8f9fa;
+}
+
+.lock-icon {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+}
+
+.lock-icon[data-locked="true"] {
+    background-color: #dc3545;
+    color: white;
+}
+
+.lock-icon[data-locked="false"] {
+    background-color: transparent;
+    color: #6c757d;
+}
+
+.lock-icon:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Prevent dragging when locked */
+.annotation-tree-node[draggable="false"] {
+    cursor: default;
+}
+
+.annotation-tree-node[draggable="false"] .node-content {
+    opacity: 1;
+}
+
+.annotation-tree-node[draggable="false"] .add-layer-btn {
+    display: none;
+}
+
+/* Remove the disabled state for dropdown menu */
+.annotation-tree-node[draggable="false"] .annotation-dropdown-toggle {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.add-layer-btn {
+    padding: 2px 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: none;
+    cursor: pointer;
+}
+
+.add-layer-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.add-layer-btn.hidden {
+    display: none;
+}
+
+.layer-rename-input {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+
+.layer-node {
+    background: #f8f9fa;
+}
+
+.node-children .layer-node {
+    border-left: 2px solid #0066cc;
+}
+
+.layer-node > .node-content {
+    font-weight: 500;
+}
+
+.layer-node > .node-children {
+    margin-left: 12px;
+    padding: 4px 0;
+    min-height: 8px;
+    position: relative;
+    overflow: visible;
+}
+
+.node-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.node-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.node-actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.annotation-dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.annotation-tree-node.drop-before {
+    border-top: 2px solid #0066cc;
+    margin-top: 0;
+}
+
+.annotation-tree-node.drop-after {
+    border-bottom: 2px solid #0066cc;
+    margin-bottom: 0;
+}
+
+.annotation-tree-node.drop-inside {
+    background-color: #e6f0ff;
+}
+
+.layer-node.drop-inside > .node-children {
+    background-color: #e6f0ff;
+    border-radius: 4px;
+}
+
+.annotation-options {
+    position: relative;
+}
+
+.make-flex {
+    display: flex;
+}
+
+.make-flex-row {
+    flex-direction: row;
+}
+
+.make-gap-4 {
+    gap: 1rem;
+}
+
+.make-align-center {
+    align-items: center;
+}
+
+.make-mb-4 {
+    margin-bottom: 1rem;
+}
+
+.make-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.make-btn i {
+    font-size: 14px;
+}
+
+.make-btn-primary {
+    background-color: #269de1;
+    color: white;
+    border-color: #269de1;
+}
+
+.make-btn-primary:hover {
+    background-color: #269de1;
+}
+
+.make-btn-secondary {
+    background-color: #269de1;
+    color: white;
+    border-color: #269de1;
+}
+
+.make-btn-secondary:hover {
+    background-color: #1e90d0;
+}
+
+.make-btn-close {
+    background-color: #94a3b8;
+    color: white;
+    border-color: #94a3b8;
+}
+
+.make-btn-close:hover {
+    background-color: #94a3b8;
+}
+
+.make-btn-sm {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.make-btn-outline {
+    background-color: white;
+    color: #000;
+    border: 1px solid #000;
+}
+
+.make-btn-outline:hover {
+    background-color: #f8f8f8;
+}
+
+.save-layer-btn i,
+.cancel-layer-btn i {
+    font-size: 14px;
+}
+
+.annotation-search-input {
+    width: 100%;
+    padding: 4px 28px 4px 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.annotation-search-input:focus {
+    border-color: #007bff;
+}
+
+.annotation-search-input::placeholder {
+    color: #94a3b8;
+}
+
+.annotation-tree-controls {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1000;
+    border-bottom: 1px solid #e2e8f0;
+    justify-content: right;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.highlight-moved {
+    animation: highlightMove 2s ease-out;
+}
+
+@keyframes highlightMove {
+    0% {
+        background-color: rgba(255, 255, 0, 0.2);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+#annotation-tree-container > .annotation-tree-node {
+    margin-left: 0;
+}
+
+#annotation-tree-container > .annotation-tree-node > .node-children {
+    margin-left: 0px;
+}
+
+.icon-loading {
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
